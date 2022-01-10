@@ -4,9 +4,9 @@ const CACHE_NAME = APP_PREFIX + VERSION;
 
 const FILES_TO_CACHE = [
     './index.html',
+    './js/idb.js',
     './css/styles.css',
     './js/index.js',
-    './js/idb.js',
     './manifest.webmanifest',
     './icons/icon-512x512.png',
     './icons/icon-384x384.png',
@@ -49,32 +49,18 @@ self.addEventListener("install", function(e) {
   });
   
   // fetch
-  self.addEventListener("fetch", e => {
-      if(e.request.url.includes('/api/')) {
-          console.log('[Service Worker] Fetch(data)', e.request.url);
-      
-  e.respondWith(
-                  caches.open(DATA_CACHE_NAME).then(cache => {
-                  return fetch(e.request)
-                  .then(response => {
-                      if (response.status === 200){
-                          cache.put(e.request.url, response.clone());
-                      }
-                      return response;
-                  })
-                  .catch(err => {
-                      return cache.match(e.request);
-                  });
-              })
-              );
-              return;
-          }
+  self.addEventListener('fetch', function (e) {
+    console.log('fetch request : ' + e.request.url)
+    e.respondWith(
+      caches.match(e.request).then(function (request) {
+        if (request) { // if cache is available, respond with cache
+          console.log('responding with cache : ' + e.request.url)
+          return request
+        } else {       // if there are no cache, try fetching request
+          console.log('file is not cached, fetching : ' + e.request.url)
+          return fetch(e.request)
+        }
   
-  e.respondWith(
-      caches.open(CACHE_NAME).then( cache => {
-        return cache.match(e.request).then(response => {
-          return response || fetch(e.request);
-        });
       })
-    );
+    )
   });
