@@ -27,7 +27,7 @@ function saveRecord(record) {
     budgetStore.add(record);
 };
 
-function checkTransaction() {
+function uploadTransaction() {
 // open a transaction on your db
     const transaction = db.transaction(['new_Transaction'], 'readwrite');
 // access your object store    
@@ -67,4 +67,4 @@ function checkTransaction() {
   }
 };
 // listen for app coming back online
-window.addEventListener('online', checkTransaction);
+window.addEventListener('online', uploadTransaction);
