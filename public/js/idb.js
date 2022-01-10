@@ -22,20 +22,23 @@ request.onsuccess = function(event) {
 
 function saveRecord(record) {
     const transaction = db.transaction(['new_transaction'], 'readwrite');
-    const  budgetStore = transaction.objectStore('new_transaction');
+    const  budgetObjectStore = transaction.objectStore('new_transaction');
   
-    budgetStore.add(record);
+    budgetObjectStore.add(record);
 };
 
 function uploadTransaction() {
-// open a transaction on your db
-    const transaction = db.transaction(['new_transaction'], 'readwrite');
-// access your object store    
-    const budgetStore = transaction.objectStore('new_transaction');
-// get all records from store and set to a variable
-    const getAll = budgetStore.getAll();
-  
-    getAll.onsuccess = function() {
+
+  // open a transaction on your db
+  const transaction = db.transaction(['new_transaction'], 'readwrite');
+
+  // access your object store
+  const budgetObjectStore = transaction.objectStore('new_transaction');
+
+  // get all records from store and set to a variable
+  const getAll = budgetObjectStore.getAll();
+
+  getAll.onsuccess = function() {
     if (getAll.result.length > 0) {
       fetch('/api/transaction', {
         method: 'POST',
@@ -53,10 +56,10 @@ function uploadTransaction() {
           // open one more transaction
           const transaction = db.transaction(['new_transaction'], 'readwrite');
 
-          const budgetStore = transaction.objectStore('new_transaction');
+          const budgetObjectStore = transaction.objectStore('new_transaction');
           
           // clear all items in your store
-          budgetStore.clear();
+          budgetObjectStore.clear();
 
           alert('All saved transactions have been submitted!');
         })

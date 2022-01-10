@@ -52,7 +52,7 @@
     "name": "Budget-Tracker",
     "short_name": "Budget-tracker",
     "display": "standalone",
-    "start_url": ".",
+    "start_url": "./index.html",
     "theme_color": "#ffffff",
     "background_color": "#6666ff"
 }
