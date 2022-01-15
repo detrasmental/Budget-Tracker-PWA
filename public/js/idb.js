@@ -13,7 +13,7 @@ request.onupgradeneeded = function(event) {
 request.onsuccess = function(event) {
     db = event.target.result;
     if (navigator.onLine) {
-      uploadTransaction();
+      checkDatabase();
     }
   };
   
@@ -24,21 +24,15 @@ request.onsuccess = function(event) {
 
 function saveRecord(record) {
     const transaction = db.transaction(['pending'], 'readwrite');
-    const  budgetObjectStore = transaction.objectStore('pending');
+    const  store = transaction.objectStore('pending');
   
-    budgetObjectStore.add(record);
+    store.add(record);
 };
 
-function uploadTransaction() {
-
-  // open a transaction on your db
+function checkDatabase() {
   const transaction = db.transaction(['pending'], 'readwrite');
-
-  // access your object store
-  const budgetObjectStore = transaction.objectStore('pending');
-
-  // get all records from store and set to a variable
-  const getAll = budgetObjectStore.getAll();
+  const store = transaction.objectStore('pending');
+  const getAll = store.getAll();
 
   getAll.onsuccess = function() {
     if (getAll.result.length > 0) {
@@ -51,25 +45,14 @@ function uploadTransaction() {
         }
       })
         .then(response => response.json())
-        .then(serverResponse => {
-          if (serverResponse.message) {
-            throw new Error(serverResponse);
-          }
-          // open one more transaction
+        .then(() => {
           const transaction = db.transaction(['pending'], 'readwrite');
-
-          const budgetObjectStore = transaction.objectStore('pending');
-          
+          const store = transaction.objectStore('pending');
           // clear all items in your store
-          budgetObjectStore.clear();
-
-          alert('All saved transactions have been submitted!');
-        })
-        .catch(err => {
-          console.log(err);
+          store.clear();
         });
     }
   }
 };
 // listen for app coming back online
-window.addEventListener('online', uploadTransaction);
+window.addEventListener('online', checkDatabase);
