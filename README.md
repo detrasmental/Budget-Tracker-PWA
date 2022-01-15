@@ -14,18 +14,15 @@ A budget tracker application that allows for offline access and functionality. T
 ## Table of Contents
 - [Description](#Description)
 - [Screenshot](#Screenshot)
-- [Credits](#Credits)
 - [Contribution](#contributes)
 - [Contact Me](#Contact)
 
 ## Screenshot
-![]()
+![screenshot](https://user-images.githubusercontent.com/85942489/149627320-f24e2f09-93bb-4d38-a8cb-e953c1778d42.JPG)
+
 
 ## Contribution
 As this is homerwork, I'm not currently accepting contributions. Please feel free to reach out with suggestions on how to make it better though. Thank you!
-
-## Credits
-
 
 ## Contact
 Find me on GitHub: [detrasmental](https://github.com/detrasmental)
