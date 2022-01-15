@@ -143,11 +143,9 @@ function sendTransaction(isAdding) {
 }
 
 document.querySelector("#add-btn").onclick = function() {
-  e.preventDefault();
   sendTransaction(true);
 };
 
 document.querySelector("#sub-btn").onclick = function() {
-  e.preventDefault();
   sendTransaction(false);
 };
