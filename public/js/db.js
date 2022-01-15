@@ -13,7 +13,7 @@ request.onupgradeneeded = function(event) {
 request.onsuccess = function(event) {
     db = event.target.result;
     if (navigator.onLine) {
-      checkDatabase();
+      uploadBudget();
     }
   };
   
@@ -29,7 +29,7 @@ function saveRecord(record) {
     store.add(record);
 };
 
-function checkDatabase() {
+function uploadBudget() {
   const transaction = db.transaction(['pending'], 'readwrite');
   const store = transaction.objectStore('pending');
   const getAll = store.getAll();
@@ -55,4 +55,4 @@ function checkDatabase() {
   }
 };
 // listen for app coming back online
-window.addEventListener('online', checkDatabase);
+window.addEventListener('online', uploadBudget);
